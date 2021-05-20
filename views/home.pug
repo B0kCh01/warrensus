@@ -1,0 +1,95 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title WarZK SUS!
+        link(rel="stylesheet" href="/main.css")
+        style.
+            body {
+                margin: 0 auto;
+                max-width: 1200px;
+                margin-top: 50px;
+                font-family: Impact;
+                width: 90%;
+                background: #ECE8E1;
+            }
+
+            #profile {
+                object-fit: cover;
+                width: 300px;
+                border-radius: 150px;
+            }
+    body(dir="ltr" data-lang-latin="true")
+        .center
+            <img id="profile" src="https://cdn.discordapp.com/avatars/261997608334000128/567cd890c1790d3d496827dac056bc14.png?size=256">
+            br
+            br
+            h1 Warren is sus. smh my head
+        
+        br
+
+        .HomeGameOverview-module--titleContainer--3Foi1
+            h6.tagline.HomeGameOverview-module--tagline--58XIC.Tagline-module--horizontal--2PE1T.Tagline-module--tagline--3sCT-.inView.active
+                span.scamble-text
+                span.text.Tagline-module--text--rh4Ro VLRT PR0T0C0L
+                span.text.Tagline-module--text--rh4Ro MR0C - SWD - BR4
+            h2.heading-02.en.HomeGameOverview-module--title--3WSqQ.SlideUpTitle-module--slideUpTitle--3OLqo.SlideUpTitle-module--inView--1xMIY
+                span Sus #[span#count #{count}] times
+
+        .center
+            button.button.PrimaryButton-module--red--1EPFx.PrimaryButton-module--borderDark--3AUaI.PrimaryButton-module--primaryButton--2ec0w(onclick="fetch('/susd').then(()=>{ grab(once=true) })")
+                .PrimaryButton-module--label--3gc3A
+                    span.PrimaryButton-module--hover-mask--2oPWv.PrimaryButton-module--default--2alKM
+                    span.PrimaryButton-module--label-text--23ce5 Warren Sus
+
+            br
+
+            button.accused.button.PrimaryButton-module--red--1EPFx.PrimaryButton-module--borderDark--3AUaI.PrimaryButton-module--primaryButton--2ec0w(style="opacity: 0" onclick="fetch('/notsus').then(()=>{ grab(once=true) })")
+                .PrimaryButton-module--label--3gc3A
+                    span.PrimaryButton-module--hover-mask--2oPWv.PrimaryButton-module--default--2alKM
+                    span.PrimaryButton-module--label-text--23ce5 Nevermind
+
+            br
+            br
+            br
+
+            h1(style="opacity: 0").accused
+                .flex-mid
+                    <img src="https://s2.svgbox.net/loaders.svg?ic=puff&color=000000" width="32" height="32"> 
+                    | Need another witness to verify susness
+
+        script.
+            var sus = document.getElementById("count").innerHTML;
+
+            function grab(once) {
+                fetch("/livesus")
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data)
+                        let string = data.count;
+                        if (string != sus) {
+                            document.getElementById("count").innerHTML = string;
+                            sus = string;
+                        }
+
+                        if (data.accused == true) {
+                            document.querySelectorAll(".accused")
+                                .forEach(el => {
+                                    el.style.opacity = 1;
+                                });
+                                 
+                        } else {
+                            document.querySelectorAll(".accused")
+                                .forEach(el => {
+                                    el.style.opacity = 0;
+                                });
+                        }
+
+                        if (!once)
+                            setTimeout(grab, 5000);
+                    });
+            }
+
+            grab();
