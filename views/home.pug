@@ -31,7 +31,7 @@ html(lang="en")
         br
 
         .HomeGameOverview-module--titleContainer--3Foi1
-            h6.tagline.HomeGameOverview-module--tagline--58XIC.Tagline-module--horizontal--2PE1T.Tagline-module--tagline--3sCT-.inView.active
+            h6#rick.tagline.HomeGameOverview-module--tagline--58XIC.Tagline-module--horizontal--2PE1T.Tagline-module--tagline--3sCT-.inView.active
                 span.scamble-text
                 span.text.Tagline-module--text--rh4Ro VLRT PR0T0C0L
                 span.text.Tagline-module--text--rh4Ro MR0C - SWD - BR4
@@ -61,6 +61,10 @@ html(lang="en")
                     | Need another witness to verify susness
 
         script.
+            document.getElementById("rick").addEventListener("click", function() {
+                window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+            });
+
             var sus = document.getElementById("count").innerHTML;
 
             function grab(once) {

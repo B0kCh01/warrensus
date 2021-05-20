@@ -5,6 +5,10 @@
     opacity: 0.3;
 }
 
+* {
+    user-select: none;
+}
+
 button {
     min-width: 300px;
 }
