@@ -73,19 +73,26 @@ button {
     background: #FF4655;
 }
 
+@keyframes beat {
+    0% {
+        transform: scale(0.9999);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 #overlay {
     width: 100vw;
-    height: 0;
+    height: 100vh;
     display: flex;
-    position: absolute;
+    position: fixed;
     top: 100vh;
     justify-content: center;
     align-items: center;
     background: rgb(39, 39, 39);
     z-index: 99999;
-    transition: top 1.5s cubic-bezier(.81,.01,.28,.99),
-                height 1.5s cubic-bezier(.81,.01,.28,.99)
-    ;
+    transition: top 1.5s cubic-bezier(.81,.01,.28,.99);
 }
 
 #overlay span {
@@ -93,14 +100,8 @@ button {
     transition: all .8s ease-in-out;
 }
 
-body.loading {
-    height: 100vh;
-    overflow: hidden;
-}
-
 body.loading #overlay {
     top: 0;
-    height: 100vh;
 }
 
 body.loading #overlay span {
@@ -113,7 +114,7 @@ body.loading #overlay span {
 
 #overlay img {
     margin-right: 10px;
-    filter: invert(1) drop-shadow(rgba(255, 255, 255, 0.527) 0 0 10px);
+    filter: invert(1);
 }
 
 #overlay > span {
