@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const nocache = require("nocache");
 const fs = require("fs");
 
 
@@ -11,70 +10,122 @@ app.set('trust proxy', true);
 
 app.use(express.static(__dirname + '/static'));
 
-var confirmers = {};
+var data = {
+    warzk: {
+        confirmers: {},
+        count: 61
+    },
+    b0kch01: {
+        confirmers: {},
+        count: 0
+    },
+    kardic: {
+        confirmers: {},
+        count: 0
+    },
+    tonofclay: {
+        confirmers: {},
+        count: 0
+    },
+    foreskinfarmer: {
+        confirmers: {},
+        count: 0
+    },
+    turtle: {
+        confirmers: {},
+        count: 0
+    },
+    seyonijam: {
+        confirmers: {},
+        count: 0
+    },
+    child_predator: {
+        confirmers: {},
+        count: 0
+    }
+};
+
+function getSusCount(person) {
+    if (!data[person]) return 0;
+    return data[person].count || 0;
+}
+
+function isConfirmed(person, ip) {
+    if (!data[person] || !data[person].confirmers)
+        return false;
+    return data[person].confirmers[ip] === true;
+}
+
+function confirm(person, ip) {
+    if (data[person] && data[person].confirmers)
+        data[person].confirmers[ip] = true;
+}
+
+function unconfirm(person, ip) {
+    if (data[person] && data[person].confirmers)
+        data[person].confirmers[ip] = false;
+}
+
+function resetConfirms(person) {
+    if (data[person])
+        data[person].confirmers = {};
+}
+
+function addCount(person) {
+    if (!data[person]) return 0;
+        return ++data[person].count;
+}
+
+function minCount(person) {
+    if (!data[person]) return 0;
+        return --data[person].count;
+}
 
 app.get("/", (req, res) => {
-    fs.readFile(__dirname + "/susd.txt", "utf8", (err, data) => {
-        res.render("home", {
-            count: data
-        });
+    res.render("home", {
+        count: getSusCount("warzk")
     });
 });
 
-app.get("/susd", (req, res) => {
-    confirmers[req.ip] = true;
+app.get("/susd/:person", (req, res) => {
+    const person = req.params.person;
+    confirm(person, req.ip);
 
-    if (Object.keys(confirmers).length > 1) {
-        confirmers = {};
-        fs.readFile(__dirname + "/susd.txt", "utf8", (err, data) => {
-            if (err) res.send(err);
-            fs.writeFile(__dirname + "/susd.txt", "" + (parseInt(data) + 1), err => {
-                console.log(err);
-                res.send("");
-            });
-        });
-    } else {
-        res.send("");
+    if (data[person]) {
+        if (Object.keys(data[person].confirmers).length > 1) {
+            resetConfirms(person);
+            addCount(person);
+        }
     }
-
     
+    res.send("Done!");
 });
 
-app.get("/livesus", (req, res) => {
-    fs.readFile(__dirname + "/susd.txt", "utf8", (err, data) => {
-        res.send({
-            count: data,
-            accused: confirmers[req.ip] === true
-        });
+app.get("/livesus/:person", (req, res) => {
+    const person = req.params.person;
+    res.send({
+        count: getSusCount(person),
+        accused: isConfirmed(person, req.ip)
     });
 });
 
-app.get("/notsus", (req, res) => {
-    confirmers[req.ip] = false;
-    fs.readFile(__dirname + "/susd.txt", "utf8", (err, data) => {
-        res.send({
-            count: data,
-            accused: confirmers[req.ip] === true
-        });
+app.get("/notsus/:person", (req, res) => {
+    const person = req.params.person;
+    unconfirm(person, req.ip);
+    res.send({
+        count: getSusCount(person),
+        accused: isConfirmed(person, req.ip)
     });
 });
 
-app.get("/forcesus", (req, res) => {
-    fs.readFile(__dirname + "/susd.txt", "utf8", (err, data) => {
-        if (err) res.send(err);
-        fs.writeFile(__dirname + "/susd.txt", "" + (parseInt(data) + 1), err => {
-            res.send(data);
-        });
-    });
+app.get("/forcesus/:person", (req, res) => {
+    const person = req.params.person;
+    res.send(addCount(person));
 });
 
-app.get("/forceunsus", (req, res) => {
-    fs.readFile(__dirname + "/susd.txt", "utf8", (err, data) => {
-        if (err) res.send(err);
-        fs.writeFile(__dirname + "/susd.txt", "" + (parseInt(data) - 1), err => {
-            res.send(data);
-        });
-    });
+app.get("/forceunsus/:person", (req, res) => {
+    const person = req.params.person;
+    res.send(minCount(person));
 });
 
 app.get("*", (req, res) => {

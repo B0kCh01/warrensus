@@ -21,6 +21,92 @@ button {
     margin-top: 30px;
 }
 
+.center-h {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.center-h > * {
+    padding: 5px;
+    margin: 10px;
+    border: #bdbcb7 solid 1px;
+    cursor: pointer;
+    transition: all .2s ease-out;
+}
+
+.center-h > * > * {
+    padding: 10px;
+    background: #0F1923;
+    color: white;
+    transition: all .2s ease-out;
+}
+
+.content {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.center-h > *:hover > *{
+    background: #424446;
+}
+
+.center-h > *.selected > * {
+    background: #FF4655;
+}
+
+#overlay {
+    width: 100vw;
+    height: 0;
+    display: flex;
+    position: absolute;
+    top: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: rgb(39, 39, 39);
+    z-index: 99999;
+    transition: top 1.5s cubic-bezier(.81,.01,.28,.99),
+                height 1.5s cubic-bezier(.81,.01,.28,.99)
+    ;
+}
+
+#overlay span {
+    opacity: 0;
+    transition: all .8s ease-in-out;
+}
+
+body.loading {
+    height: 100vh;
+    overflow: hidden;
+}
+
+body.loading #overlay {
+    top: 0;
+    height: 100vh;
+}
+
+body.loading #overlay span {
+    opacity: 1;
+}
+
+#overlay > * {
+    z-index: 100000;
+}
+
+#overlay img {
+    margin-right: 10px;
+    filter: invert(1) drop-shadow(rgba(255, 255, 255, 0.527) 0 0 10px);
+}
+
+#overlay > span {
+    font-size: 40px;
+    color: white;
+}
+
 .accused {
     transition: opacity .3s ease-out;
 }
