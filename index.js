@@ -77,7 +77,7 @@ function addCount(person) {
 }
 
 function minCount(person) {
-    if (!data[person]) return 0;
+    if (!data[person] || data[person] == 0) return 0;
         return --data[person].count;
 }
 
@@ -120,12 +120,12 @@ app.get("/notsus/:person", (req, res) => {
 
 app.get("/forcesus/:person", (req, res) => {
     const person = req.params.person;
-    res.send(addCount(person));
+    res.send(addCount(person).toString());
 });
 
 app.get("/forceunsus/:person", (req, res) => {
     const person = req.params.person;
-    res.send(minCount(person));
+    res.send(minCount(person).toString());
 });
 
 app.get("*", (req, res) => {
