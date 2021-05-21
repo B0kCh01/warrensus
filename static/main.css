@@ -9,6 +9,20 @@
     user-select: none;
 }
 
+body {
+    margin: 0 auto;
+    margin-top: 50px;
+    font-family: Impact;
+    background: #ECE8E1;
+    position: relative;
+}
+
+#profile {
+    object-fit: cover;
+    width: 25%;
+    border-radius: 1500px;
+}
+
 button {
     min-width: 300px;
 }
